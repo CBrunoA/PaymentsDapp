@@ -1,0 +1,44 @@
+nav{
+    background: var(--color-primary-soft);
+    width: max-content;
+    display: block;
+    padding: 1rem 2rem;
+    position: fixed;
+    border-radius: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 3rem;
+    display: flex;
+    gap: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+nav a{
+    background: transparent;
+    display: flex;
+    gap: 1rem;
+}
+
+nav a:hover{
+    background: transparent;
+    color:white;
+    transition: var(--transition);
+}
+
+nav a.active{
+    background: transparent;
+    color: white;
+}
+
+.BTN_sec{
+    color: var(--color-primary);
+    text-decoration: none;
+    transform: translateY(20%);
+}
+
+.socials{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transform: translateY(0%);
+}

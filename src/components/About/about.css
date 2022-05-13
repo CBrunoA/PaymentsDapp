@@ -1,0 +1,36 @@
+.about__container{
+    background: var(--color-bg);
+    margin: 0;
+    display: block;
+    height: 100%;
+    position:relative;
+    top: 5rem;
+    border-radius: 0 0 0rem;
+    text-align: center;
+}
+
+.about_text{
+    background: white;
+    display: inline-flex;
+    height: 25rem;
+    width: max-content;
+    padding: 1em 1rem;
+    gap: 3rem;
+    top: 2rem;
+    margin: 1rem;
+    box-shadow: 0.3rem 0.3rem 0.7rem 0.3rem rgb(175, 175, 175);
+    border-radius: 2rem;
+}
+
+.about_title{
+    text-align: center;
+}
+
+@media screen and(max-width: 1024px){
+
+}
+
+@media screen and (max-width: 600px) {
+
+}
+

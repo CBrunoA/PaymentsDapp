@@ -1,0 +1,87 @@
+.container1{
+    position: relative;
+    display: block;
+    text-align: center;
+    top: 3rem;
+    height: max-content;
+}
+
+.title{
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.btnP{
+    width: max-content;
+    text-align: center;
+    display: inline-block;
+    color: var(--color-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    border: 2px solid var(--color-primary);
+    transition: var(--transition);
+    margin-left: 0.5rem;
+    font-size: 20px;
+}
+
+.btnP:hover{
+    background: white;
+    border-color:transparent;
+    color: var(--color-primary);
+}
+.btnP-colored{
+    background:var(--color-primary);
+    color: white;
+}
+
+.note{
+    font-size: 12px;
+    margin-left: 1rem;
+    font-weight: bold;
+    display: block;
+}
+
+.btnS{
+    width: max-content;
+    text-align: center;
+    display: inline-block;
+    color: var(--color-primary);
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    border: 2px solid var(--color-primary);
+    transition: var(--transition);
+    margin-left: 0.5rem;
+    font-size: 12px;
+}
+
+.btnS:hover{
+    background: white;
+    border-color:transparent;
+    color: var(--color-primary);
+}
+.btnS-colored{
+    background:var(--color-primary);
+    color: white;
+}
+
+.deposit{
+    background-color: transparent;
+    transition: max-height 0.4s ease-out;
+    overflow: hidden;
+}
+
+.withdraw{
+    background-color: transparent;
+    transition: max-height 0.4s ease-out;
+    overflow: hidden;
+}
+
+.inputs{
+
+}

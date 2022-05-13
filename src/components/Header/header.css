@@ -1,0 +1,20 @@
+.header__container{
+    text-align: center;
+    height: 18rem;
+    position:relative;
+    top: 0rem;
+    background: var(--color-gradient-primary-transp-down);
+    color: white;
+    width: 100%
+}
+
+.BTN{
+    margin-top: 3rem;
+    display: flex;
+    gap: 1rem;
+    justify-content:center;
+}
+
+btn_header{
+    color:white;
+}
