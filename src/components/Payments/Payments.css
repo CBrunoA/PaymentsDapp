@@ -16,6 +16,7 @@
 }
 
 .btnP{
+    background: white;
     width: max-content;
     text-align: center;
     display: inline-block;
@@ -38,6 +39,11 @@
     background:var(--color-primary);
     color: white;
 }
+.btnP-colored:hover{
+    background: white;
+    border-color:transparent;
+    color: var(--color-primary);
+}
 
 .note{
     font-size: 12px;
@@ -57,7 +63,7 @@
     border: 2px solid var(--color-primary);
     transition: var(--transition);
     margin-left: 0.5rem;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 .btnS:hover{

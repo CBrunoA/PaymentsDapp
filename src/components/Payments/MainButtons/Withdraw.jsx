@@ -1,9 +1,9 @@
 import React from 'react'
 import {BsArrowBarUp} from 'react-icons/bs'
 
-const Withdraw = (withdrawAmount, withdraw) => {
+const Withdraw = (withdrawAmount, withdraw, hideComponent) => {
   return (
-    <div className="container1">
+    <div className="">
         <form className="deposit" onSubmitCapture={(event) => {
             event.preventDefault()
             withdraw(withdrawAmount.value)
@@ -11,7 +11,7 @@ const Withdraw = (withdrawAmount, withdraw) => {
         }>
             <input type="text" className="inputs" placeholder="Amount to deposit" 
             ref={(input)=>withdrawAmount = input}/>
-            <button className="btnS btnS-colored"><BsArrowBarUp/>Withdraw</button>
+            <button type="submit" className="btnS btnS-colored"><BsArrowBarUp/> Withdraw</button>
         </form>
     </div>
   )

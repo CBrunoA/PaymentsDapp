@@ -8,9 +8,11 @@ la blockchain cargada, simplemente importamos web3 y los props del constructor.
 
 ***Tareas***
 
-1-no funciona, lo que no funciona es lo de hide show, probarlo con lo que hay, y ya luego metemos lo otro
+
 2-UI para el deposito y su input. Hacer que al pulsar el botón salga el desplegable para depositar. 
 Al pulsar Deposit saldrá un desplegable con la entrada de texto y otro botón pequeño para depositar.
 Invetigar como hicimos el de faq para ver si es similar.
 
 3-Funcion web3 withdraw
+
+4-COmentar todo el código
