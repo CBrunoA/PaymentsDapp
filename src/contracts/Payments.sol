@@ -94,14 +94,15 @@ contract Payments{
     //--------------------Payment functions------------------------
     
     //Function payment
-    function Payment(uint _index) payable public{
+    /*function Payment(uint _index) payable public{
         Receiver[] storage _receiverArray = receivers[msg.sender];
         //Enviar al contrato
         require(msg.value == _receiverArray[_index].amount);
         //Del contrato al usuario
         (bool success,) = payable(_receiverArray[_index].dir).call{value: _receiverArray[_index].amount}("");
         emit paymentDone(msg.sender, _receiverArray[_index].dir, _receiverArray[_index].name, _receiverArray[_index].amount);
-    }
+    }*/
+
 
     function Deposit(uint _amount) payable public{
         require(msg.value == _amount);
@@ -114,13 +115,25 @@ contract Payments{
         funds[msg.sender] -= _amount;
     }
 
+    function NormalPayment(string memory _name, address _address, uint _amount) payable public{
+        require(msg.value==_amount);
+        (bool success,) = payable(_address).call{value: _amount}("");
+        emit paymentDone(msg.sender, _address, _name, _amount);
+    }
     //Payment automatic. Then with JS we make the payment on time.
-    function PaymentWithDeposit(uint _index) payable public{
-        Receiver[] storage _receiverArray = receivers[msg.sender];
-        require(_receiverArray[_index].amount <= funds[msg.sender]);
-        (bool success,) = payable(_receiverArray[_index].dir).call{value: _receiverArray[_index].amount}("");
-        funds[msg.sender] -= _receiverArray[_index].amount; 
-        emit paymentDone(msg.sender, _receiverArray[_index].dir, _receiverArray[_index].name, _receiverArray[_index].amount);
+    function PaymentWithDeposit(string memory _name, address _address, uint _amount) payable public{
+        require(_amount <= funds[msg.sender]);
+        (bool success,) = payable(_address).call{value: _amount}("");
+        funds[msg.sender] -= _amount; 
+        emit paymentDone(msg.sender, _address, _name, _amount);
+    }
+
+    function Payment(string memory _name, address _address, uint _amount) payable public{
+        if(funds[msg.sender] >= _amount){
+            PaymentWithDeposit(_name, _address, _amount);
+        }else{            
+            NormalPayment(_name, _address, _amount);
+        }
     }
 
 }

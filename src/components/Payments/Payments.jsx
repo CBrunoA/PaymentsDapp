@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
+import Web3 from 'web3'
+import payments_contract from '../../abis/Payments.json'
 import Nav from './Nav/Nav'
 import Accnav from './AccNav/Accnav'
 import MainButtons from './MainButtons/MainButtons'
-import Web3 from 'web3'
-import payments_contract from '../../abis/Payments.json'
+import Worker from './Workers/Worker'
 import './Payments.css'
 import {AiOutlinePlus} from 'react-icons/ai'
 import {BsArrowBarUp} from 'react-icons/bs'
@@ -67,7 +68,7 @@ class Payments extends Component{
       balance: "",
       constructor: "",
       depositAmount: "",
-      withdrawAmount: ""
+      withdrawAmount: "",
     }
   }
 
@@ -92,7 +93,14 @@ class Payments extends Component{
     await web3.payments_contract.methods.Deposit(depositAmount).send({from: this.account, value: ethers})
   }
   withdraw = async(withdrawAmount)=>{
-    //Hacer
+    const web3 = window.web3
+    const ethers = web3.utils.toWei(this.depositAmount.value, 'ether')
+    await web3.payments_contract.methods.Withdraw(withdrawAmount).send({from: this.account, value: ethers})
+  }
+  payment = async(nombre, address, amount) =>{
+    const web3 = window.web3
+    const ethers = web3.utils.toWei(this.amount.value, 'ether')
+    await web3.payments_contract.methods.Payment(nombre, address, amount).send({from:this.account, value: ethers})
   }
   
   render(){ 
@@ -102,6 +110,7 @@ class Payments extends Component{
 
         <MainButtons depositAmount={this.state.depositAmount} deposit={this.deposit} 
         withdrawAmount={this.state.withdrawAmount} withdraw={this.withdraw}/>
+        <Worker payment={this.payment}/>
 
         <Nav/>
         <Accnav account={this.state.account} balance={this.state.balance}/>
