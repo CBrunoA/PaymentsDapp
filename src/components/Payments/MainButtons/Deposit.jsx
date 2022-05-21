@@ -11,7 +11,7 @@ const Deposit = (depositAmount, deposit) => {
         }>
             <input type="text" className="inputs" placeholder="Amount to deposit" 
             ref={(input)=>depositAmount = input}/>
-            <button type="submit" className="btnS btnS-colored"><BsArrowBarUp/> Send</button>
+            <button type="submit" className="buttonPay"><BsArrowBarUp/> Send</button>
         </form>
     </div>
   )

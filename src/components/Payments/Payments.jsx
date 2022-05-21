@@ -109,8 +109,7 @@ class Payments extends Component{
         <div className="title">MANAGE YOUR PAYMENTS</div>
 
         <MainButtons depositAmount={this.state.depositAmount} deposit={this.deposit} 
-        withdrawAmount={this.state.withdrawAmount} withdraw={this.withdraw}/>
-        <Worker payment={this.payment}/>
+        withdrawAmount={this.state.withdrawAmount} withdraw={this.withdraw} payment={this.payment}/>
 
         <Nav/>
         <Accnav account={this.state.account} balance={this.state.balance}/>

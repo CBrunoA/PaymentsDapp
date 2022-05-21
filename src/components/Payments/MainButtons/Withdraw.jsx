@@ -11,7 +11,7 @@ const Withdraw = (withdrawAmount, withdraw, hideComponent) => {
         }>
             <input type="text" className="inputs" placeholder="Amount to deposit" 
             ref={(input)=>withdrawAmount = input}/>
-            <button type="submit" className="btnS btnS-colored"><BsArrowBarUp/> Withdraw</button>
+            <button type="submit" className="buttonPay"><BsArrowBarUp/> Withdraw</button>
         </form>
     </div>
   )

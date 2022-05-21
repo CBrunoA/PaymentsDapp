@@ -14,7 +14,7 @@ se almacenará en el smart contract, y si alguien mete ese código en la web par
 1-Cambiar el smart contract, ya que hemos cambiado el uso propio. Estaba pensado para funcionar de otra forma. 
 It shouldn't save the receiver address. Maybe in other way, assigning a name and a direction and saving it, being able to delete objects in the array to delete someone if we dont want it any longer. 
 
-1-Hacer que al hacer click en add worker aparezca un componente de estos. **LA PAGINA NO SE VE POR LOS REF EN WORKER.JSX**
+1-Hacer que al hacer click en add worker aparezca un componente de estos. 
     Pasos: 
     1.En MainButtons hacer que cuando pulsemos el boton add worker haga aparecer el componente worker. Este no se elimina ni guarda, simplemente al dar pay ponemos que 
     se borre el texto de ahi, y lo volvemos a usar. Conseguir que se cierre el componente, tanto enviando el formulario como dando a la cruz.

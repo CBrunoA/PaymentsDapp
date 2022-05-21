@@ -7,16 +7,15 @@ IoMdClose} from 'react-icons/io'
 
 
 const Worker = (payment) => {
-    const nombre = null;
-    const address = null;
-    const amount = null;
+    var nombre = null;
+    var address = null;
+    var amount = null;
     return (
         <div>
             <form className="containerW" onSubmitCapture={(event) => {
                 event.preventDefault()
                 }
             }>
-                <button type="submit" className="close"> <IoMdClose/></button>
                 <input type="text" className="inputs inputsName" placeholder="Name" ref={(input)=>nombre = input}/>
                 <input type="text" className="inputs inputWallet" placeholder="Wallet" ref={(input)=>address = input}/>
                 <input type="text" className="inputs inputMotive" placeholder="Motive" ref={(input)=>nombre = input}/>
