@@ -4,14 +4,13 @@ import {BsArrowBarUp} from 'react-icons/bs'
 const Deposit = (depositAmount, deposit) => {
   return (
     <div className="">
-        <form className="deposit" onSubmitCapture={(event) => {
-            event.preventDefault()
-            deposit(depositAmount.value)
-            }
-        }>
+        <form className="deposit">
             <input type="text" className="inputs" placeholder="Amount to deposit" 
             ref={(input)=>depositAmount = input}/>
-            <button type="submit" className="buttonPay"><BsArrowBarUp/> Send</button>
+            <button type="submit" className="buttonPay" onSubmit={(event) => {
+            event.preventDefault()
+            deposit(depositAmount.value)
+            }}><BsArrowBarUp/> Send</button>
         </form>
     </div>
   )

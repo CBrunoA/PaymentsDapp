@@ -5,7 +5,7 @@ class Accnav extends Component{
   render(){
     const{account}=this.props;
     const{balance}=this.props;
-    const{deposit}=this.props;
+    const{viewDeposit}=this.props;
     return (
       <container>
           <p className="accnav">
@@ -16,7 +16,7 @@ class Accnav extends Component{
               Balance: {balance} 
           </p>
           <p className="accnav">
-              Deposit: {deposit} 
+              Deposit: {viewDeposit} 
           </p>
       </container>
     )

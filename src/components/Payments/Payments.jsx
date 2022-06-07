@@ -4,22 +4,19 @@ import payments_contract from '../../abis/Payments.json'
 import Nav from './Nav/Nav'
 import Accnav from './AccNav/Accnav'
 import MainButtons from './MainButtons/MainButtons'
-import Worker from './Workers/Worker'
 import './Payments.css'
-import {AiOutlinePlus} from 'react-icons/ai'
-import {BsArrowBarUp} from 'react-icons/bs'
-import {BsArrowBarDown} from 'react-icons/bs'
+
 
 class Payments extends Component{
 
   /**WEB3**/
 
   //LOAD WEB3
-  async componentWillMount() {
+  async componentDidMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
     await this.balance()
-    await this.viewDeposit()
+    //await this.viewDeposit()
   }
 
   async loadWeb3(){
@@ -68,6 +65,7 @@ class Payments extends Component{
       balance: "",
       constructor: "",
       depositAmount: "",
+      currentDepositAmount: "",
       withdrawAmount: "",
     }
   }
@@ -83,36 +81,95 @@ class Payments extends Component{
   //Deposit
   viewDeposit = async() =>{
     const web3 = window.web3
-    const depositWei = await web3.payments_contract.methods.viewFunds.call()
-    const depositAmount = web3.utils.fromWei(await depositWei, 'ether') + 'ETH'
-    this.setState({depositAmount})
+    const depositWei = await web3.contract.methods.viewFunds.call()
+    const currentDepositAmount = web3.utils.fromWei(await depositWei, 'ether') + 'ETH'
+    this.setState({currentDepositAmount})
   }
-  deposit = async(depositAmount)=>{
-    const web3 = window.web3
-    const ethers = web3.utils.toWei(this.depositAmount.value, 'ether')
-    await web3.payments_contract.methods.Deposit(depositAmount).send({from: this.account, value: ethers})
+  deposit = async(cantidad, mensaje)=>{
+    try{
+      console.log(mensaje)  
+      const web3 = window.web3
+      const accounts = await web3.eth.getAccounts()
+      const ethers = web3.utils.toWei(this.cantidad.value, 'ether')
+      await this.state.contract.methods.Deposit(cantidad).send({from: accounts[0], value: ethers})
+    }catch(err){
+      this.setState({errMessage: err.message})
+    }finally{
+      this.setState({loading:false})
+    }
   }
   withdraw = async(withdrawAmount)=>{
     const web3 = window.web3
     const ethers = web3.utils.toWei(this.depositAmount.value, 'ether')
-    await web3.payments_contract.methods.Withdraw(withdrawAmount).send({from: this.account, value: ethers})
+    await web3.contract.methods.Withdraw(withdrawAmount).send({from: this.account, value: ethers})
   }
   payment = async(nombre, address, amount) =>{
     const web3 = window.web3
     const ethers = web3.utils.toWei(this.amount.value, 'ether')
-    await web3.payments_contract.methods.Payment(nombre, address, amount).send({from:this.account, value: ethers})
+    await web3.contract.methods.Payment(nombre, address, amount).send({from:this.account, value: ethers})
   }
-  
+
+  envio = async(cantidad, mensaje) => {
+    try{
+        console.log(mensaje)  
+        const web3 = window.web3
+        const accounts = await web3.eth.getAccounts()
+        const ethers = web3.utils.toWei(this.cantidad.value, 'ether')
+        await this.state.contract.methods.CompraTokens(cantidad).send({from: accounts[0], value: ethers})
+    }catch(err){
+        this.setState({errMessage: err.message})
+    }finally{
+        this.setState({loading:false})
+    }
+  }
   render(){ 
     return(
       <section id="payments">
+
+        <form onSubmitCapture={(event) => {
+            event.preventDefault()
+            const cantidad = this.cantidad.value
+            const web3 = window.web3
+            const ethers = web3.utils.toWei(this.cantidad.value, 'ether')
+            const mensaje = "Deposito en ejecucion..."
+            this.deposit(cantidad, ethers,mensaje)
+            }
+        }>
+            <input type="text" 
+            className='form-control mb-1' 
+            placeholder="Cantidad de tokens a comprar"
+            ref={(input)=>this.cantidad = input}/>
+
+            <input type="submit" 
+            className='bbtn btn-block btn-danger btn-sm' 
+            value="DEPOSIT"/>
+         </form>
+
+        <form onSubmitCapture={(event) => {
+            event.preventDefault()
+            const cantidad = this.cantidad.value
+            const web3 = window.web3
+            const ethers = web3.utils.toWei(this.cantidad.value, 'ether')
+            const mensaje = "Compra de tokens en ejecución..."
+            this.envio(cantidad, ethers,mensaje)
+            }
+        }>
+            <input type="text" 
+            className='form-control mb-1' 
+            placeholder="Cantidad de tokens a comprar"
+            ref={(input)=>this.cantidad = input}/>
+
+            <input type="submit" 
+            className='bbtn btn-block btn-danger btn-sm' 
+            value="COMPRAR TOKENS"/>
+         </form>
         <div className="title">MANAGE YOUR PAYMENTS</div>
 
         <MainButtons depositAmount={this.state.depositAmount} deposit={this.deposit} 
         withdrawAmount={this.state.withdrawAmount} withdraw={this.withdraw} payment={this.payment}/>
 
         <Nav/>
-        <Accnav account={this.state.account} balance={this.state.balance}/>
+        <Accnav account={this.state.account} balance={this.state.balance} viewDeposit={this.state.currentDepositAmount}/>
       </section>
     )
   } 

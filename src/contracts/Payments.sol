@@ -1,4 +1,4 @@
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity ^0.8.0;
 
 contract Payments{
 
@@ -7,16 +7,6 @@ contract Payments{
     //Contract owner
     address private owner;
     
-    //USER VARIABLES
-    address[] users;
-    struct Receiver{
-        address dir;
-        string name;
-        uint amount;
-    }
-    mapping(address => Receiver[]) receivers;
-    mapping(address => address[]) adminAddresses;   
-
     //PAYMENT VARIABLES
     mapping(address => uint) balance; //balance of users wallet
     mapping(address => uint) funds; //total funds deposited by a user
@@ -29,31 +19,19 @@ contract Payments{
     event paymentDone(address, address, string, uint);
 
 
-    //CONTRACT VARIABLES
-    
-    constructor(){
-        owner = msg.sender;
-    }
-
     //FUNCTIONS
 
     //----------------------------View functions---------------------------
-
-    function viewBalance() public view returns(uint){
-        return msg.sender.balance;
-    }
 
     function viewFunds() public view returns(uint){
         return funds[msg.sender];
     }
 
-    //--------------------------Other functions----------------------------
-
 
     //---------------------------Receiver functions------------------------
 
     //Add new receiver
-    function AddReceiver(address _dir, string memory _name, uint _amount) public {
+    /*function AddReceiver(address _dir, string memory _name, uint _amount) public {
         address _user = msg.sender;
         
         //Check if it is a new user 
@@ -76,64 +54,55 @@ contract Payments{
 
         //emit event
         emit receiverCreated(_user, _dir, _name, _amount);
-    }   
+    }  */ 
 
-    //Modify receiver
-    function ModifyReceiver(uint _index, address _dir, string memory _name, uint _amount) public {
+    function EthPrice(uint _amount) internal pure returns (uint){
+        return _amount*(1 ether);
+    }
+
+    function CompraTokens(uint _numTokens) public payable {
+        // Calcular el coste de los tokens 
+        uint coste = EthPrice(_numTokens);
+        // Se requiere que el valor de ethers pagados sea equivalente al coste 
+        require (msg.value >= coste, "Compra menos Tokens o paga con mas Ethers.");
+        // Diferencia a pagar 
+        uint returnValue = msg.value - coste;
+        // Tranferencia de la diferencia 
+        (bool success,) = payable(msg.sender).call{value: returnValue}("");
+    }
+    function Deposit(uint _amount) public payable{
+        uint price = EthPrice(_amount);
+        require(msg.value >= price, "Not enough funds");
+        //funds[msg.sender] += _amount;
+        //uint returnValue = msg.value - _amount;
+        //(bool success,) = payable(msg.sender).call{value: returnValue}("");
 
     }
 
-    //REVISAR
-    //Delete receiver
-    function DeleteReceiver(uint _index) public{
-        Receiver[] storage _receiverArray = receivers[msg.sender];
-        delete _receiverArray[_index];
-        //HACER
-    }
-
-    //--------------------Payment functions------------------------
-    
-    //Function payment
-    /*function Payment(uint _index) payable public{
-        Receiver[] storage _receiverArray = receivers[msg.sender];
-        //Enviar al contrato
-        require(msg.value == _receiverArray[_index].amount);
-        //Del contrato al usuario
-        (bool success,) = payable(_receiverArray[_index].dir).call{value: _receiverArray[_index].amount}("");
-        emit paymentDone(msg.sender, _receiverArray[_index].dir, _receiverArray[_index].name, _receiverArray[_index].amount);
-    }*/
-
-
-    function Deposit(uint _amount) payable public{
-        require(msg.value == _amount);
-        funds[msg.sender] += _amount;
-    }
-
-    function Withdraw(uint _amount) payable public{
+    function Withdraw(uint _amount) public payable{
         require(_amount <= funds[msg.sender]);
         (bool success,) = payable(msg.sender).call{value: _amount}("");
         funds[msg.sender] -= _amount;
     }
 
-    function NormalPayment(string memory _name, address _address, uint _amount) payable public{
-        require(msg.value==_amount);
+    function NormalPayment(string memory _name, address _address, uint _amount) public payable{
+        require(msg.value>=_amount);
         (bool success,) = payable(_address).call{value: _amount}("");
         emit paymentDone(msg.sender, _address, _name, _amount);
     }
     //Payment automatic. Then with JS we make the payment on time.
-    function PaymentWithDeposit(string memory _name, address _address, uint _amount) payable public{
+    function PaymentWithDeposit(string memory _name, address _address, uint _amount) public payable{
         require(_amount <= funds[msg.sender]);
         (bool success,) = payable(_address).call{value: _amount}("");
         funds[msg.sender] -= _amount; 
         emit paymentDone(msg.sender, _address, _name, _amount);
     }
 
-    function Payment(string memory _name, address _address, uint _amount) payable public{
+    function Payment(string memory _name, address _address, uint _amount) public payable{
         if(funds[msg.sender] >= _amount){
             PaymentWithDeposit(_name, _address, _amount);
         }else{            
             NormalPayment(_name, _address, _amount);
         }
     }
-
 }
